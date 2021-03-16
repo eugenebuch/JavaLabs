@@ -1,0 +1,1 @@
+Triangle square is: 2.0000000000000013
