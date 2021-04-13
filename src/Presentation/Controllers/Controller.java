@@ -124,10 +124,7 @@ public class Controller {
             mi.setOnAction(event -> menuItemChanged(ba));
         }
 
-        emptyInfo.setText("Name: " + selectedClient.get().getName()
-                + "\nAccounts total: " + bankAccountList.size()
-                + "\nTotal funds: " + bankAccountList.stream().mapToDouble(BankAccount::getFunds).sum()
-        );
+        updateClientInfoView(selectedClient.get());
     }
 
     private void menuItemChanged(BankAccount ba) {
@@ -173,8 +170,12 @@ public class Controller {
 
         Stage stage = showWindowHelper(loader, "Operate with account: " + currentBankAccount.getNumber());
 
-        stage.setOnCloseRequest(event -> accountInfo.setText(bankService.getBankAccountRepository()
-                .get(currentBankAccount.getId()).toString()));
+        stage.setOnCloseRequest(event -> {
+            accountInfo.setText(bankService.getBankAccountRepository()
+                .get(currentBankAccount.getId()).toString());
+
+            updateClientInfoView(currentBankAccount.getOwner());
+        });
     }
 
     private void setViewBtn() throws IOException {
@@ -194,5 +195,15 @@ public class Controller {
         stage.show();
 
         return stage;
+    }
+
+    private void updateClientInfoView(Client client) {
+        List<BankAccount> bankAccountList = bankService.getBankAccountRepository()
+                .getAllByPredicate(x -> x.getOwner().getId() == client.getId());
+
+        emptyInfo.setText("Name: " + client.getName()
+                + "\nAccounts total: " + bankAccountList.size()
+                + "\nTotal funds: " + bankAccountList.stream().mapToDouble(BankAccount::getFunds).sum()
+        );
     }
 }

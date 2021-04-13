@@ -31,7 +31,7 @@ public class Operation implements Serializable {
     @Override
     public String toString() {
         return "bankAccountNumber =" + bankAccount.getNumber() +
-                ", operation = " + name + '\'' +
+                ", operation = " + name  +
                 ", amount = " + amount;
     }
 
