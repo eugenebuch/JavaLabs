@@ -65,9 +65,6 @@ public class OperateController {
     }
 
     private void setOperateBtn() {
-        if (bankAccount == null) {
-            System.out.println("FUUUUUUUUUUUUUUUUUUC");
-        }
         switch (operationMenu.getText()) {
             case ("Deposit"):
                 bankService.deposit(bankAccount.getId(), Double.parseDouble(amountField.getText()));
