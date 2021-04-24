@@ -4,17 +4,29 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class BankAccount implements Serializable {
+    private int id;
     private static int _id = 0;
-    private final int id;
     private final int number;
     private final Client owner;
+    private final int clientId;
     private double funds = 0;
     private boolean isOpened = true;
 
     public BankAccount(Client owner) {
-        id = _id++;
+        _id = id + 1;
         this.owner = owner;
+        clientId = owner.getId();
         number = (owner.getName() + id).hashCode();
+    }
+
+    public BankAccount(int id, int number, Client owner, double funds, boolean isOpened) {
+        this.id = id;
+        _id++;
+        this.number = number;
+        this.owner = owner;
+        clientId = owner.getId();
+        this.funds = funds;
+        this.isOpened = isOpened;
     }
 
     public int getId() {
@@ -64,5 +76,9 @@ public class BankAccount implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, number, owner, funds);
+    }
+
+    public int getClientId() {
+        return clientId;
     }
 }

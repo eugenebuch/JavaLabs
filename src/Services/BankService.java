@@ -1,13 +1,11 @@
 package Services;
 
+import Models.BankAccount;
+import Models.Operation;
 import Repositories.BankAccountRepository;
 import Repositories.ClientRepository;
 import Repositories.OperationRepository;
-import Models.BankAccount;
-import Models.Operation;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.stream.Collectors;
 
 public final class BankService {
     private BankAccountRepository bankAccountRepository;

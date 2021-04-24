@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Client implements Serializable {
-    private String name;
+    private int id;
     private static int _id = 0;
-    private final int id;
+    private String name;
 
-    public Client(String name) {
-        id = _id++;
+    public Client(int id, String name) {
+        if (id == -1)
+            this.id = _id;
+        else
+            this.id = id;
+        _id = id + 1;
         this.name = name;
     }
 

@@ -2,6 +2,7 @@ import Repositories.BankAccountRepository;
 import Repositories.ClientRepository;
 import Repositories.OperationRepository;
 import Services.BankService;
+import Services.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,8 @@ import javafx.stage.Stage;
 import Models.BankAccount;
 import Models.Client;
 import Models.Operation;
+
+import java.sql.SQLException;
 
 public class Main extends Application {
     @Override
@@ -22,9 +25,14 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
-        TestRun();      // Generates Sample Data
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        DatabaseConnection dbcon = new DatabaseConnection();
+        dbcon.init();
+        dbcon.load();
+        //TestRun();      // Generates Sample Data
         launch(args);
+        dbcon.save();
+        dbcon.close();
     }
 
     public static void TestRun() {
@@ -32,9 +40,9 @@ public class Main extends Application {
         ClientRepository clientRepository = new ClientRepository();
         OperationRepository operationRepository = new OperationRepository();
 
-        Client client1 = new Client("Ivan");
+        Client client1 = new Client(-1, "Ivan");
         clientRepository.add(client1);
-        Client client2 = new Client("Petr");
+        Client client2 = new Client(-1, "Petr");
         clientRepository.add(client2);
 
         BankAccount bankAccount1 = new BankAccount(client1);
@@ -56,8 +64,7 @@ public class Main extends Application {
                 clientRepository);
 
         bankService.withdraw(bankAccount1.getId(), 10);
-        bankService.changeAccountStatus(bankAccount2.getId());
-        //bankAccountService.deposit(bankAccount2.getId(), 30);
+        //bankService.changeAccountStatus(bankAccount2.getId());
         bankService.send(bankAccount3.getId(), bankAccount1.getId(), 50);
 
         System.out.println("Operations:");

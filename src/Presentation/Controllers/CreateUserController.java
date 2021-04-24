@@ -36,7 +36,7 @@ public class CreateUserController {
 
         BankService bankService = BankService.getInstance(null, null, null);
         ClientRepository clientRepository = bankService.getClientRepository();
-        clientRepository.add(new Client(name));
+        clientRepository.add(new Client(-1, name));
         bankService.setClientRepository(clientRepository);
     }
 }

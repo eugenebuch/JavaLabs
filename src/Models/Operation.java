@@ -3,15 +3,26 @@ package Models;
 import java.io.Serializable;
 
 public class Operation implements Serializable {
+    private int id;
     private static int _id = 0;
-    private final int id;
     private final BankAccount bankAccount;
+    private final int bankAccountId;
     private final String name;
     private final double amount;
 
     public Operation(BankAccount bankAccount, String name, double amount) {
-        id = _id++;
+        _id = id + 1;
         this.bankAccount = bankAccount;
+        bankAccountId = bankAccount.getId();
+        this.name = name;
+        this.amount = amount;
+    }
+
+    public Operation(int id, String name, BankAccount bankAccount, double amount) {
+        this.id = id;
+        _id++;
+        this.bankAccount = bankAccount;
+        this.bankAccountId = bankAccount.getId();
         this.name = name;
         this.amount = amount;
     }
@@ -37,5 +48,9 @@ public class Operation implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public int getBankAccountId() {
+        return bankAccountId;
     }
 }
